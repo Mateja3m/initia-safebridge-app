@@ -1,4 +1,4 @@
-# SafeBridge
+# SafeBridge: Intent-Aware Bridging for Interwoven Rollups
 
 SafeBridge is a single-screen bridging workstation for validating transfer readiness before execution on Initia-connected routes.
 
@@ -17,15 +17,12 @@ SafeBridge is a single-screen bridging workstation for validating transfer readi
 
 ## Stack
 
-- Next.js (pages router)
-- React
+- Next.js 
 - Material UI (MUI)
 - `@initia/interwovenkit-react`
 - `@tanstack/react-query`
 - `wagmi`
 - `viem`
-- JavaScript only
-- npm only
 
 ## Setup
 
@@ -127,54 +124,3 @@ Confidence rules:
 - any hard RPC failure downgrades validation to `low`
 - warning-level latency contributes to `medium`
 - deterministic route or amount failures can also force `low`
-
-## What is real
-
-- wallet connection
-- source RPC probing
-- destination RPC probing
-- latency measurement
-- execution submission attempt through the connected wallet when the route supports it
-
-## What is still hybrid or simulated
-
-- some route support logic
-- some destination readiness scoring
-- fallback execution outcomes when the real path is not available
-
-## Folder structure
-
-```text
-initia-safebridge-app/
-├── .initia/
-│   └── submission.json
-├── components/
-├── lib/
-├── pages/
-├── public/
-├── styles/
-├── next.config.js
-├── package.json
-└── README.md
-```
-
-## Initia submission metadata
-
-The repository includes `.initia/submission.json` for submission metadata tracking.
-
-Replace these values before final submission:
-
-- `repo_url`
-- `commit_sha`
-- `rollup_chain_id`
-- `deployed_address`
-- `deploy_tx_hash`
-- `demo_video_url`
-
-Where each value comes from:
-
-- Commit SHA: `git rev-parse HEAD`
-- Rollup chain id: deployment output or config
-- Deployed address: contract or app deployment output
-- Deploy tx hash: deployment logs or explorer record
-- Demo video URL: uploaded demo link

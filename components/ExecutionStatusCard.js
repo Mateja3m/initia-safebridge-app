@@ -119,17 +119,17 @@ export default function ExecutionStatusCard({
         border: '1px solid',
         borderColor: 'divider',
         borderRadius: 2,
-        p: { xs: 2, md: 2.1 },
+        p: { xs: 1.4, md: 2.1 },
         backgroundColor: 'background.paper',
         boxShadow: '0 10px 24px rgba(22, 48, 94, 0.06)',
       }}
     >
-      <Stack spacing={1.75}>
-        <Stack spacing={0.9} sx={{ pb: 1, borderBottom: '1px solid', borderColor: 'divider' }}>
+      <Stack spacing={{ xs: 1.2, md: 1.75 }}>
+        <Stack spacing={{ xs: 0.55, md: 0.9 }} sx={{ pb: { xs: 0.7, md: 1 }, borderBottom: '1px solid', borderColor: 'divider' }}>
           <Typography variant="overline" color="text.secondary">
             OUTPUT / EXECUTION
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.45 }}>
             Execution lifecycle, transaction details, and recovery guidance.
           </Typography>
         </Stack>
@@ -146,7 +146,7 @@ export default function ExecutionStatusCard({
             borderColor: 'divider',
             borderRadius: 2,
             backgroundColor: '#F8FAFE',
-            p: 1.2,
+            p: { xs: 0.95, md: 1.2 },
           }}
         >
           <Stack spacing={1}>
@@ -154,7 +154,7 @@ export default function ExecutionStatusCard({
               Execution Lifecycle
             </Typography>
             {lifecycle.map((step) => (
-              <Stack key={step.label} direction="row" spacing={1} alignItems="center">
+              <Stack key={step.label} direction="row" spacing={0.75} alignItems="center">
                 <Chip
                   label={step.id}
                   size="small"
@@ -167,7 +167,7 @@ export default function ExecutionStatusCard({
                     color: lifecycleTone[step.state].dot,
                   }}
                 />
-                <Typography variant="body2" color={step.state === 'pending' ? 'text.secondary' : 'text.primary'}>
+                <Typography variant="body2" sx={{ fontSize: { xs: '0.86rem', md: undefined } }} color={step.state === 'pending' ? 'text.secondary' : 'text.primary'}>
                   {step.label}
                 </Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
@@ -184,7 +184,7 @@ export default function ExecutionStatusCard({
             borderColor: 'divider',
             borderRadius: 2,
             backgroundColor: '#F7FAFF',
-            p: 1.2,
+            p: { xs: 0.95, md: 1.2 },
           }}
         >
           <Stack spacing={1}>
@@ -194,7 +194,7 @@ export default function ExecutionStatusCard({
               </Typography>
               <Chip size="small" label="Interwoven route" variant="outlined" />
             </Stack>
-            <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
+            <Stack direction="row" spacing={0.75} alignItems="center" flexWrap="wrap" useFlexGap>
               <Chip label={form.sourceNetwork} />
               <Typography variant="body2" color="text.secondary">
                 →
@@ -206,19 +206,19 @@ export default function ExecutionStatusCard({
         </Box>
 
         {!wallet ? (
-          <Alert severity="info" sx={{ borderRadius: 1.5 }}>
+          <Alert severity="info" sx={{ borderRadius: 1.5, fontSize: { xs: '0.84rem', md: undefined } }}>
             Wallet connection is required before execution can open.
           </Alert>
         ) : null}
 
         {executionState.status === 'submitting' ? (
-          <Alert severity="info" sx={{ borderRadius: 1.5 }}>
+          <Alert severity="info" sx={{ borderRadius: 1.5, fontSize: { xs: '0.84rem', md: undefined } }}>
             Submitting the transaction flow. SafeBridge is waiting for terminal execution proof.
           </Alert>
         ) : null}
 
         {executionState.status === 'submitted' ? (
-          <Alert severity="info" sx={{ borderRadius: 1.5 }}>
+          <Alert severity="info" sx={{ borderRadius: 1.5, fontSize: { xs: '0.84rem', md: undefined } }}>
             Initia-native handoff submitted. Waiting for final execution result.
           </Alert>
         ) : null}
@@ -229,7 +229,7 @@ export default function ExecutionStatusCard({
             borderColor: 'divider',
             borderRadius: 2,
             backgroundColor: 'background.paper',
-            p: 1.2,
+            p: { xs: 0.95, md: 1.2 },
           }}
         >
           <Stack spacing={1}>
@@ -241,7 +241,7 @@ export default function ExecutionStatusCard({
                 <Typography variant="caption" color="text.secondary">
                   Tx hash
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ fontFamily: '"Roboto Mono", "SFMono-Regular", monospace', fontSize: { xs: '0.72rem', md: '0.8rem' }, textAlign: 'right', maxWidth: { xs: '58%', md: '70%' }, wordBreak: 'break-all' }}>
                   {executionState.txHash || 'Pending submission'}
                 </Typography>
               </Stack>
@@ -255,13 +255,13 @@ export default function ExecutionStatusCard({
                 <Typography variant="caption" color="text.secondary">
                   Chain id
                 </Typography>
-                <Typography variant="body2">{chainId}</Typography>
+                <Typography variant="body2" sx={{ fontFamily: '"Roboto Mono", "SFMono-Regular", monospace', fontSize: { xs: '0.78rem', md: undefined } }}>{chainId}</Typography>
               </Stack>
               <Stack direction="row" justifyContent="space-between" spacing={1} sx={{ py: 0.5 }}>
                 <Typography variant="caption" color="text.secondary">
                   Execution mode
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ textAlign: 'right', maxWidth: { xs: '58%', md: '70%' } }}>
                   {executionState.mode === 'real_intent_anchor'
                     ? 'Real Initia handoff'
                     : executionState.mode === 'fallback_simulation'
@@ -291,12 +291,12 @@ export default function ExecutionStatusCard({
               borderRadius: 2,
               border: '1px solid',
               borderColor: 'divider',
-              p: 1.25,
+              p: { xs: 1, md: 1.25 },
               backgroundColor: '#F8FAFE',
             }}
           >
             <Typography variant="subtitle1">Execution idle</Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontSize: { xs: '0.84rem', md: undefined } }}>
               {validationResult
                 ? 'Execution can proceed once the current validation result is accepted.'
                 : 'Execution unlocks after wallet connection and a completed validation run.'}
@@ -307,7 +307,7 @@ export default function ExecutionStatusCard({
         {executionState.status === 'success' ? (
           <Box
             sx={{
-              p: 1.4,
+              p: { xs: 1.1, md: 1.4 },
               borderRadius: 2,
               border: '1px solid',
               borderColor: 'success.main',
@@ -319,7 +319,7 @@ export default function ExecutionStatusCard({
                 <CheckCircleRoundedIcon color="success" />
                 <Typography variant="h6">Execution completed</Typography>
               </Stack>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
                 {executionState.message}
               </Typography>
             </Stack>
@@ -329,7 +329,7 @@ export default function ExecutionStatusCard({
         {executionState.status === 'failure' ? (
           <Box
             sx={{
-              p: 1.4,
+              p: { xs: 1.1, md: 1.4 },
               borderRadius: 2,
               border: '1px solid',
               borderColor: 'error.main',
@@ -347,7 +347,7 @@ export default function ExecutionStatusCard({
                 variant="outlined"
                 sx={{ alignSelf: 'flex-start' }}
               />
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
                 {executionState.message}
               </Typography>
             </Stack>
@@ -360,7 +360,7 @@ export default function ExecutionStatusCard({
             borderColor: validationResult?.confidence === 'low' ? 'error.main' : 'divider',
             borderRadius: 2,
             backgroundColor: 'background.paper',
-            p: 1.2,
+            p: { xs: 0.95, md: 1.2 },
           }}
         >
           <Stack spacing={0.9}>
@@ -380,7 +380,7 @@ export default function ExecutionStatusCard({
                 </Typography>
               </>
             ) : (
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.5 }}>
                 {proactiveGuidance}
               </Typography>
             )}

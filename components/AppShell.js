@@ -49,34 +49,37 @@ export default function AppShell({
         maxWidth="xl"
         sx={{
           position: "relative",
-          pt: { xs: 3, md: 4.5 },
+          pt: { xs: 1.75, md: 4.5 },
           pb: { xs: 2, md: 2.5 },
+          px: { xs: 1.5, sm: 3, md: 3 },
         }}
       >
-        <Stack spacing={2.25}>
+        <Stack spacing={{ xs: 1.4, md: 2.25 }}>
           <Stack
             direction={{ xs: "column", md: "row" }}
             alignItems={{ xs: "flex-start", md: "flex-start" }}
             justifyContent="space-between"
-            spacing={2.5}
+            spacing={{ xs: 1.1, md: 2.5 }}
             sx={{
-              px: { xs: 0.5, md: 0 },
+              px: { xs: 0, md: 0 },
               py: 0.5,
             }}
           >
-            <Stack spacing={0.9} sx={{ maxWidth: 780, flex: 1 }}>
+            <Stack spacing={{ xs: 0.55, md: 0.9 }} sx={{ maxWidth: 780, flex: 1, width: '100%' }}>
               <Typography
                 variant="h1"
                 sx={{
-                  maxWidth: 390,
+                  maxWidth: { xs: 220, md: 390 },
                   color: "#123B68",
-                  paddingBottom: 1.1,
+                  paddingBottom: { xs: 0.35, md: 1.1 },
+                  fontSize: { xs: '3rem', sm: '3.8rem', md: undefined },
+                  lineHeight: { xs: 0.98, md: 0.95 },
                 }}
               >
                 SafeBridge
               </Typography>
 
-              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ pb: 0.35 }}>
+              <Stack direction="row" spacing={0.8} flexWrap="wrap" useFlexGap sx={{ pb: { xs: 0.15, md: 0.35 } }}>
                 <Chip label="INITIA WORKSTATION" color="primary" size="small" />
                 <Chip label="VALIDATE FIRST" variant="outlined" size="small" />
               </Stack>
@@ -84,7 +87,7 @@ export default function AppShell({
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
-                sx={{ maxWidth: 760 }}
+                sx={{ maxWidth: 760, fontSize: { xs: '0.98rem', md: undefined }, lineHeight: { xs: 1.35, md: 1.45 } }}
               >
                 Check the route before you submit it.
               </Typography>
@@ -92,7 +95,7 @@ export default function AppShell({
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ maxWidth: 660 }}
+                sx={{ maxWidth: 660, fontSize: { xs: '0.84rem', md: undefined }, lineHeight: { xs: 1.45, md: 1.55 } }}
               >
                 Live RPC checks, route rules, and execution proof stay on one screen.
               </Typography>
@@ -123,6 +126,8 @@ export default function AppShell({
               borderRadius: 1.5,
               backgroundColor: "background.paper",
               maxWidth: 1120,
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: 'repeat(4, 1fr)' },
             }}
           >
             {statusItems.map((item) => (
@@ -134,6 +139,9 @@ export default function AppShell({
                   flex: 1,
                   px: { xs: 1.35, sm: 1.6 },
                   py: 1.15,
+                  borderBottom: { xs: '1px solid', sm: 'none' },
+                  borderColor: 'divider',
+                  '&:last-child': { borderBottom: 'none' },
                 }}
               >
                 <Typography variant="overline" color="text.secondary">
@@ -143,13 +151,15 @@ export default function AppShell({
                   variant="subtitle2"
                   sx={{
                     letterSpacing: "-0.02em",
-                    whiteSpace: "nowrap",
+                    whiteSpace: { xs: 'normal', sm: "nowrap" },
                     overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    textOverflow: { xs: 'clip', sm: "ellipsis" },
                     maxWidth: "100%",
                     fontFamily:
                       item.label === "Last tx hash" ? '"Roboto Mono", "SFMono-Regular", monospace' : undefined,
                     fontSize: item.label === "Last tx hash" ? "0.95rem" : undefined,
+                    lineHeight: { xs: 1.3, sm: 1.25 },
+                    wordBreak: item.label === 'Last tx hash' ? 'break-all' : 'normal',
                   }}
                 >
                   {item.value}
@@ -167,6 +177,7 @@ export default function AppShell({
                         item.label === "Last tx hash" || item.label === "Execution mode"
                           ? '"Roboto Mono", "SFMono-Regular", monospace'
                           : undefined,
+                      fontSize: { xs: '0.68rem', sm: undefined },
                     }}
                   >
                     {item.caption}
@@ -185,8 +196,8 @@ export default function AppShell({
               borderColor: "divider",
               borderRadius: 1.5,
               backgroundColor: "#F7FAFF",
-              px: 1.35,
-              py: 1,
+              px: { xs: 1, md: 1.35 },
+              py: { xs: 0.85, md: 1 },
               maxWidth: 1220,
               ml: { md: 2 },
             }}
@@ -194,13 +205,13 @@ export default function AppShell({
             <Typography
               variant="overline"
               color="text.secondary"
-              sx={{ minWidth: 118 }}
+              sx={{ minWidth: { xs: 'auto', md: 118 }, mb: { xs: 0.2, md: 0 } }}
             >
               Demo flow
             </Typography>
             <Stack
               direction="row"
-              spacing={0.9}
+              spacing={{ xs: 0.55, md: 0.9 }}
               flexWrap="wrap"
               useFlexGap
               sx={{ flex: 1 }}
@@ -228,6 +239,10 @@ export default function AppShell({
                       justifyContent: "center",
                       flex: { md: 1 },
                       px: { md: 1.1 },
+                      '& .MuiChip-label': {
+                        px: { xs: 1.05, md: undefined },
+                        fontSize: { xs: '0.74rem', md: undefined },
+                      },
                     }}
                   />
                 );
@@ -249,7 +264,7 @@ export default function AppShell({
               borderTop: "1px solid",
               borderColor: "divider",
               maxWidth: 760,
-              pt: 0.75,
+              pt: { xs: 0.5, md: 0.75 },
               ml: { md: 1.5 },
             }}
           >
@@ -257,10 +272,10 @@ export default function AppShell({
               <Stack
                 key={metric.label}
                 spacing={0.55}
-                sx={{ minWidth: 0, flex: 1, px: { sm: 1.5 }, py: 0.5 }}
+                sx={{ minWidth: 0, flex: 1, px: { sm: 1.5 }, py: { xs: 0.4, md: 0.5 } }}
               >
                 <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography variant="caption" color="text.secondary" sx={{ fontSize: { xs: '0.72rem', md: undefined } }}>
                     {metric.label}
                   </Typography>
                 </Stack>
@@ -270,7 +285,7 @@ export default function AppShell({
                 >
                   {metric.value}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.9rem', md: undefined } }}>
                   {metric.hint}
                 </Typography>
               </Stack>

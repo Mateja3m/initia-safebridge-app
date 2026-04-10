@@ -153,17 +153,17 @@ export default function ValidationPanel({ wallet, form, validationState }) {
         border: '1px solid',
         borderColor: 'divider',
         borderRadius: 2,
-        p: { xs: 2, md: 2.1 },
+        p: { xs: 1.4, md: 2.1 },
         backgroundColor: '#EAF0FB',
         boxShadow: '0 10px 24px rgba(22, 48, 94, 0.06)',
       }}
     >
-      <Stack spacing={1.75}>
-        <Stack spacing={0.9} sx={{ pb: 1, borderBottom: '1px solid', borderColor: 'divider' }}>
+      <Stack spacing={{ xs: 1.2, md: 1.75 }}>
+        <Stack spacing={{ xs: 0.55, md: 0.9 }} sx={{ pb: { xs: 0.7, md: 1 }, borderBottom: '1px solid', borderColor: 'divider' }}>
           <Typography variant="overline" color="text.secondary">
             MONITOR / VALIDATION ENGINE
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.45 }}>
             Hybrid validation combines live endpoint checks with deterministic route scoring.
           </Typography>
         </Stack>
@@ -180,11 +180,11 @@ export default function ValidationPanel({ wallet, form, validationState }) {
             borderColor: 'divider',
             borderRadius: 2,
             backgroundColor: 'background.paper',
-            p: 1.2,
+            p: { xs: 0.95, md: 1.2 },
           }}
         >
-          <Stack spacing={1}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack spacing={{ xs: 0.8, md: 1 }}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={{ xs: 0.4, sm: 0 }}>
               <Typography variant="overline" color="primary.main">
                 Validation Activity
               </Typography>
@@ -208,15 +208,15 @@ export default function ValidationPanel({ wallet, form, validationState }) {
               {activityRows.map((row) => (
                 <Stack
                   key={row.key}
-                  direction="row"
+                  direction={{ xs: 'column', sm: 'row' }}
                   justifyContent="space-between"
-                  alignItems="center"
-                  spacing={1.25}
-                  sx={{ py: 0.9 }}
+                  alignItems={{ xs: 'flex-start', sm: 'center' }}
+                  spacing={{ xs: 0.55, sm: 1.25 }}
+                  sx={{ py: { xs: 0.7, sm: 0.9 } }}
                 >
                   <Box sx={{ minWidth: 0 }}>
-                    <Typography variant="subtitle2">{row.label}</Typography>
-                    <Typography variant="caption" color="text.secondary">
+                    <Typography variant="subtitle2" sx={{ fontSize: { xs: '0.92rem', md: undefined } }}>{row.label}</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.45, fontFamily: row.key === 'rpc' ? '"Roboto Mono", "SFMono-Regular", monospace' : undefined, fontSize: { xs: '0.7rem', md: undefined } }}>
                       {row.detail}
                     </Typography>
                   </Box>
@@ -254,7 +254,7 @@ export default function ValidationPanel({ wallet, form, validationState }) {
             <Stack spacing={1.25} alignItems="center">
               <CircularProgress />
               <Typography variant="subtitle1">Interpreting validation output</Typography>
-              <Typography variant="body2" color="text.secondary" align="center">
+              <Typography variant="body2" color="text.secondary" align="center" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
                 SafeBridge is combining live endpoint feedback with route policy rules.
               </Typography>
             </Stack>
@@ -263,7 +263,7 @@ export default function ValidationPanel({ wallet, form, validationState }) {
           <Stack spacing={1.5}>
             <Box
               sx={{
-                p: 1.4,
+                p: { xs: 1.05, md: 1.4 },
                 borderRadius: 2,
                 border: '1px solid',
                 borderColor: 'divider',
@@ -290,7 +290,7 @@ export default function ValidationPanel({ wallet, form, validationState }) {
                     Confidence before execution
                   </Typography>
                   <Typography variant="h6">{config.title}</Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
                     {config.blurb}
                   </Typography>
                   <Stack direction="row" spacing={0.8} flexWrap="wrap" useFlexGap>
@@ -308,10 +308,10 @@ export default function ValidationPanel({ wallet, form, validationState }) {
                 borderColor: 'divider',
                 borderRadius: 2,
                 backgroundColor: 'background.paper',
-                p: 1.15,
+                p: { xs: 0.9, md: 1.15 },
               }}
             >
-              <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={0}>
+              <Stack direction={{ xs: 'column', sm: 'row' }} divider={<Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', sm: 'block' } }} />} spacing={0}>
                 <Box sx={{ flex: 1, px: 1 }}>
                   <Typography variant="caption" color="text.secondary">
                     ROUTE
@@ -338,7 +338,7 @@ export default function ValidationPanel({ wallet, form, validationState }) {
             <Box
               sx={{
                 borderRadius: 2,
-                p: 1.25,
+                p: { xs: 1, md: 1.25 },
                 border: '1px solid',
                 borderColor: 'divider',
                 backgroundColor: 'background.paper',
@@ -347,7 +347,7 @@ export default function ValidationPanel({ wallet, form, validationState }) {
               <Typography variant="overline" sx={{ mb: 0.35, color: 'text.secondary', display: 'block' }}>
                 Confidence summary
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.55 }}>
                 {result.summary}
               </Typography>
               {validationState.lastRunAt ? (

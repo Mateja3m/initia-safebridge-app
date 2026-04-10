@@ -8,30 +8,36 @@ export default function WalletConnectButton({
   onDisconnect,
 }) {
   return (
-    <Stack spacing={2} alignItems={{ xs: "stretch", md: "flex-end" }}>
+    <Stack
+      spacing={{ xs: 1.1, md: 2 }}
+      alignItems={{ xs: 'stretch', md: 'flex-end' }}
+      sx={{ width: { xs: '100%', md: 'auto' } }}
+    >
       <Button
         variant="contained"
         size="large"
         onClick={isConnected ? onOpenWallet : onConnect}
         sx={{
-          minWidth: 196,
-          px: 2.75,
+          minWidth: { xs: '100%', md: 196 },
+          width: { xs: '100%', md: 'auto' },
+          px: { xs: 2, md: 2.75 },
           pt: 1.05,
           borderRadius: 1.5,
-          border: "1px solid rgba(38, 64, 128, 0.12)",
-          boxShadow: "none",
+          border: '1px solid rgba(38, 64, 128, 0.12)',
+          boxShadow: 'none',
           pb: 1.05,
         }}
       >
-        {isConnected ? wallet.displayAddress : "Connect Wallet"}
+        {isConnected ? wallet.displayAddress : 'Connect Wallet'}
       </Button>
 
       <Stack
-        direction="row"
-        spacing={0.8}
-        alignItems="center"
+        direction={{ xs: 'column', md: 'row' }}
+        spacing={{ xs: 0.45, md: 0.8 }}
+        alignItems={{ xs: 'flex-start', md: 'center' }}
         flexWrap="wrap"
         useFlexGap
+        sx={{ width: { xs: '100%', md: 'auto' } }}
       >
         <Chip
           size="small"
@@ -39,10 +45,10 @@ export default function WalletConnectButton({
           color={isConnected ? "success" : "default"}
           variant="outlined"
         />
-        <Typography variant="caption" color="text.secondary">
+        <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.35 }}>
           {isConnected
-            ? wallet.username || "Initia signer session active"
-            : "OKX Wallet via InterwovenKit"}
+            ? wallet.username || 'Initia signer session active'
+            : 'OKX Wallet via InterwovenKit'}
         </Typography>
         {isConnected ? (
           <Button
@@ -51,12 +57,12 @@ export default function WalletConnectButton({
             color="inherit"
             onClick={onDisconnect}
             sx={{
-              minWidth: "auto",
+              minWidth: 'auto',
               minHeight: 0,
-              px: 0.5,
+              px: { xs: 0, md: 0.5 },
               py: 0,
-              fontSize: "0.75rem",
-              color: "text.secondary",
+              fontSize: '0.75rem',
+              color: 'text.secondary',
             }}
           >
             Disconnect

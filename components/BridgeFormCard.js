@@ -37,24 +37,24 @@ export default function BridgeFormCard({
         border: '1px solid',
         borderColor: 'divider',
         borderRadius: 2,
-        p: { xs: 2, md: 2.4 },
+        p: { xs: 1.45, md: 2.4 },
         backgroundColor: 'background.paper',
         boxShadow: '0 18px 34px rgba(22, 48, 94, 0.08)',
       }}
     >
-      <Stack spacing={2.25}>
+      <Stack spacing={{ xs: 1.5, md: 2.25 }}>
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           justifyContent="space-between"
           alignItems={{ xs: 'flex-start', sm: 'center' }}
-          spacing={1}
-          sx={{ pb: 1.25, borderBottom: '1px solid', borderColor: 'divider' }}
+          spacing={0.7}
+          sx={{ pb: { xs: 0.9, md: 1.25 }, borderBottom: '1px solid', borderColor: 'divider' }}
         >
           <Stack spacing={0.45}>
             <Typography variant="overline" color="text.secondary">
               WORKSPACE / BRIDGE DECISION
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
               Decide if this route should be executed.
             </Typography>
           </Stack>
@@ -71,7 +71,7 @@ export default function BridgeFormCard({
             border: '1px solid',
             borderColor: 'divider',
             borderRadius: 2,
-            p: 1.25,
+            p: { xs: 1, md: 1.25 },
             backgroundColor: '#F7FAFF',
           }}
         >
@@ -85,7 +85,7 @@ export default function BridgeFormCard({
                 Bridge Path
               </Typography>
             </Stack>
-            <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
+            <Stack direction="row" spacing={0.75} alignItems="center" flexWrap="wrap" useFlexGap>
               <Chip label={form.sourceNetwork} />
               <Typography variant="body2" color="text.secondary">
                 →
@@ -96,18 +96,18 @@ export default function BridgeFormCard({
           </Stack>
         </Box>
 
-        <Stack direction={{ xs: 'column', lg: 'row' }} spacing={2} alignItems="stretch">
+        <Stack direction={{ xs: 'column', lg: 'row' }} spacing={{ xs: 1.15, lg: 2 }} alignItems="stretch">
           <Box
             sx={{
               flex: 1.05,
               border: '1px solid',
               borderColor: 'divider',
               borderRadius: 2,
-              p: 1.5,
+              p: { xs: 1.1, md: 1.5 },
               backgroundColor: '#F8FAFE',
             }}
           >
-            <Stack spacing={1.5}>
+            <Stack spacing={{ xs: 1.15, md: 1.5 }}>
               <Typography variant="overline" color="text.secondary">
                 INTENT INPUT
               </Typography>
@@ -125,7 +125,7 @@ export default function BridgeFormCard({
                 </Alert>
               ) : null}
 
-              <Stack spacing={1.6}>
+              <Stack spacing={{ xs: 1.2, md: 1.6 }}>
                 <TextField
                   select
                   label="Source network"
@@ -154,7 +154,7 @@ export default function BridgeFormCard({
                   ))}
                 </TextField>
 
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={1.6}>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 1.2, md: 1.6 }}>
                   <TextField
                     select
                     label="Asset"
@@ -178,7 +178,7 @@ export default function BridgeFormCard({
                     inputProps={{ inputMode: 'decimal' }}
                     helperText="Amount sanity contributes to the final confidence score."
                     FormHelperTextProps={{
-                      sx: { maxWidth: 180 },
+                      sx: { maxWidth: { xs: '100%', md: 180 }, fontSize: { xs: '0.72rem', md: undefined }, lineHeight: 1.4 },
                     }}
                   />
                 </Stack>
@@ -192,11 +192,11 @@ export default function BridgeFormCard({
               border: '1px solid',
               borderColor: 'divider',
               borderRadius: 2,
-              p: 1.5,
+              p: { xs: 1.1, md: 1.5 },
               backgroundColor: '#EEF3FD',
             }}
           >
-            <Stack spacing={1.4}>
+            <Stack spacing={{ xs: 1.05, md: 1.4 }}>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={1.2}
@@ -208,13 +208,13 @@ export default function BridgeFormCard({
                 </Typography>
               </Stack>
 
-              <Stack direction="row" spacing={1.2} alignItems="center" flexWrap="wrap" useFlexGap>
+              <Stack direction="row" spacing={0.75} alignItems="center" flexWrap="wrap" useFlexGap>
                 <Chip label={form.sourceNetwork} />
                 <Chip label={form.destinationRollup} color="primary" variant="outlined" />
                 <Chip label={form.asset} color="secondary" variant="outlined" />
               </Stack>
 
-              <Typography variant="h4" sx={{ letterSpacing: '-0.04em', pt: 0.15 }}>
+              <Typography variant="h4" sx={{ letterSpacing: '-0.04em', pt: 0.15, fontSize: { xs: '2.1rem', md: undefined } }}>
                 {amountLabel} {form.asset}
               </Typography>
 
@@ -232,7 +232,7 @@ export default function BridgeFormCard({
               >
                 <Stack
                   direction={{ xs: 'column', sm: 'row' }}
-                  spacing={1}
+                  spacing={{ xs: 0.85, sm: 1 }}
                   justifyContent="space-between"
                 >
                   <Box>
@@ -259,16 +259,16 @@ export default function BridgeFormCard({
 
         <Box>
           <Stack spacing={1.3}>
-            <Typography variant="subtitle1">Execution Posture</Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="subtitle1" sx={{ fontSize: { xs: '1rem', md: undefined } }}>Execution Posture</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
               Validation decides if submit should open.
             </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.25}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0.95, sm: 1.25 }}>
               <Box sx={{ flex: 1 }}>
                 <Typography variant="caption" color="text.secondary">
                   Submission gate
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 0.35 }}>
+                <Typography variant="body2" sx={{ mt: 0.35, fontSize: { xs: '0.9rem', md: undefined } }}>
                   Submit stays locked until wallet + valid result.
                 </Typography>
               </Box>
@@ -276,7 +276,7 @@ export default function BridgeFormCard({
                 <Typography variant="caption" color="text.secondary">
                   Execution mode
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 0.35 }}>
+                <Typography variant="body2" sx={{ mt: 0.35, fontSize: { xs: '0.9rem', md: undefined } }}>
                   Real handoff first. Fallback only if needed.
                 </Typography>
               </Box>
@@ -284,7 +284,7 @@ export default function BridgeFormCard({
                 <Typography variant="caption" color="text.secondary">
                   Interwoven route
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 0.35 }}>
+                <Typography variant="body2" sx={{ mt: 0.35, fontSize: { xs: '0.9rem', md: undefined } }}>
                   Path stays visible through the whole flow.
                 </Typography>
               </Box>
@@ -294,14 +294,14 @@ export default function BridgeFormCard({
 
         <Divider flexItem />
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1.1, sm: 1.5 }}>
           <Button
             variant="outlined"
             color="inherit"
             size="large"
             onClick={onRunValidation}
             disabled={validationState.loading || executionLoading}
-            sx={{ flex: 1, minHeight: 54, backgroundColor: '#DCE6FA' }}
+            sx={{ flex: 1, minHeight: { xs: 48, sm: 54 }, backgroundColor: '#DCE6FA' }}
           >
             {validationState.loading ? 'Running Validation...' : 'Run Validation'}
           </Button>
@@ -310,7 +310,7 @@ export default function BridgeFormCard({
             size="large"
             onClick={onBridgeNow}
             disabled={bridgeDisabled || executionLoading || validationState.loading}
-            sx={{ flex: 1.5, minHeight: 54 }}
+            sx={{ flex: 1.5, minHeight: { xs: 48, sm: 54 } }}
           >
             {executionLoading ? 'Executing via Interwoven...' : 'Execute via Interwoven Bridge'}
           </Button>

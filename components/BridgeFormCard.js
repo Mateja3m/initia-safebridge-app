@@ -9,11 +9,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { bridgeOptions } from '../lib/appConfig';
 import SectionHeader from './SectionHeader';
 
 export default function BridgeFormCard({
   form,
+  bridgeOptions,
+  catalogLoading,
+  catalogError,
   wallet,
   validationState,
   executionLoading,
@@ -125,6 +127,25 @@ export default function BridgeFormCard({
                 </Alert>
               ) : null}
 
+              {catalogLoading ? (
+                <Alert
+                  severity="info"
+                  sx={{
+                    borderRadius: 1.5,
+                    backgroundColor: 'rgba(90, 140, 255, 0.08)',
+                    border: '1px solid rgba(90, 140, 255, 0.18)',
+                  }}
+                >
+                  Loading live rollup catalog.
+                </Alert>
+              ) : null}
+
+              {catalogError ? (
+                <Alert severity="error" sx={{ borderRadius: 1.5 }}>
+                  {catalogError}
+                </Alert>
+              ) : null}
+
               <Stack spacing={{ xs: 1.2, md: 1.6 }}>
                 <TextField
                   select
@@ -132,6 +153,7 @@ export default function BridgeFormCard({
                   value={form.sourceNetwork}
                   onChange={onFormChange('sourceNetwork')}
                   fullWidth
+                  disabled={catalogLoading}
                 >
                   {bridgeOptions.sourceNetworks.map((option) => (
                     <MenuItem key={option} value={option}>
@@ -146,6 +168,7 @@ export default function BridgeFormCard({
                   value={form.destinationRollup}
                   onChange={onFormChange('destinationRollup')}
                   fullWidth
+                  disabled={catalogLoading || bridgeOptions.destinationRollups.length === 0}
                 >
                   {bridgeOptions.destinationRollups.map((option) => (
                     <MenuItem key={option} value={option}>
@@ -161,6 +184,7 @@ export default function BridgeFormCard({
                     value={form.asset}
                     onChange={onFormChange('asset')}
                     fullWidth
+                    disabled={catalogLoading}
                   >
                     {bridgeOptions.assets.map((option) => (
                       <MenuItem key={option} value={option}>
@@ -175,6 +199,7 @@ export default function BridgeFormCard({
                     value={form.amount}
                     onChange={onFormChange('amount')}
                     fullWidth
+                    disabled={catalogLoading}
                     inputProps={{ inputMode: 'decimal' }}
                     helperText="Amount sanity contributes to the final confidence score."
                     FormHelperTextProps={{
@@ -277,7 +302,7 @@ export default function BridgeFormCard({
                   Execution mode
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.35, fontSize: { xs: '0.9rem', md: undefined } }}>
-                  Real handoff first. Fallback only if needed.
+                  Opens the validated route in Interwoven Bridge.
                 </Typography>
               </Box>
               <Box sx={{ flex: 1 }}>

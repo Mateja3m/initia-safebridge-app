@@ -3,11 +3,11 @@
   "repo_url": "https://github.com/Mateja3m/initia-safebridge-app",
   "commit_sha": "REPLACE_WITH_CURRENT_COMMIT_SHA",
   "rollup_chain_id": "REPLACE_WITH_ROLLUP_CHAIN_ID",
-  "deployed_address": "https://initia-safebridge.netlify.app/",
+  "deployed_address": "REPLACE_WITH_DEPLOYED_ADDRESS",
   "deploy_tx_hash": "REPLACE_WITH_DEPLOY_TX_HASH",
-  "vm": "minievm",
+  "vm": "REPLACE_WITH_VM_TYPE",
   "native_feature": "interwoven-bridge",
-  "core_logic_path": "lib/validationEngine.js",
+  "core_logic_path": "lib/liveValidation.js",
   "native_feature_frontend_path": "components/BridgeFormCard.js",
   "demo_video_url": "REPLACE_WITH_DEMO_VIDEO_URL"
 }

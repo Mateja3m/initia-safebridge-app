@@ -77,8 +77,8 @@ function getLifecycleState(executionState, validationResult, stepKey) {
 const lifecycleDefinitions = [
   { id: '01', key: 'intent', label: 'Intent configured' },
   { id: '02', key: 'validation', label: 'Validation scored' },
-  { id: '03', key: 'submitted', label: 'Execution submitted' },
-  { id: '04', key: 'result', label: 'Result received' },
+  { id: '03', key: 'submitted', label: 'Bridge handoff opened' },
+  { id: '04', key: 'result', label: 'Handoff state received' },
 ];
 
 const lifecycleTone = {
@@ -108,10 +108,10 @@ export default function ExecutionStatusCard({
       : validationResult?.confidence === 'low'
         ? 'Validation is blocking execution. Reconfigure the route before submission.'
         : rpcCheck?.status === 'warn'
-          ? 'RPC latency is elevated. Execution is still reviewable, but re-check route health if the transfer is not urgent.'
+          ? 'RPC latency is elevated. The bridge handoff is still reviewable, but re-check route health if the transfer is not urgent.'
       : validationResult?.confidence === 'medium'
-        ? 'Execution is possible, but re-check route status or amount if the transfer is not urgent.'
-        : 'If execution fails, SafeBridge will classify the outcome and suggest the next step.';
+        ? 'Bridge handoff is possible, but re-check route status or amount if the transfer is not urgent.'
+        : 'If the handoff fails, SafeBridge will classify the issue at the wallet or handoff stage and suggest the next step.';
 
   return (
     <Box
@@ -130,14 +130,14 @@ export default function ExecutionStatusCard({
             OUTPUT / EXECUTION
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.45 }}>
-            Execution lifecycle, transaction details, and recovery guidance.
+            Handoff lifecycle, transaction details, and recovery guidance.
           </Typography>
         </Stack>
 
         <SectionHeader
-          eyebrow="Execution Outcome"
-          title="Submission Terminal"
-          description="SafeBridge records whether execution ran through a real Initia handoff or the explicit fallback simulator."
+          eyebrow="Bridge Handoff"
+          title="Handoff Terminal"
+          description="SafeBridge records when a validated route is handed into the real Interwoven Bridge flow."
         />
 
         <Box
@@ -151,7 +151,7 @@ export default function ExecutionStatusCard({
         >
           <Stack spacing={1}>
             <Typography variant="overline" color="primary.main">
-              Execution Lifecycle
+              Handoff Lifecycle
             </Typography>
             {lifecycle.map((step) => (
               <Stack key={step.label} direction="row" spacing={0.75} alignItems="center">
@@ -213,13 +213,13 @@ export default function ExecutionStatusCard({
 
         {executionState.status === 'submitting' ? (
           <Alert severity="info" sx={{ borderRadius: 1.5, fontSize: { xs: '0.84rem', md: undefined } }}>
-            Submitting the transaction flow. SafeBridge is waiting for terminal execution proof.
+            Opening Interwoven Bridge with the validated route details.
           </Alert>
         ) : null}
 
         {executionState.status === 'submitted' ? (
           <Alert severity="info" sx={{ borderRadius: 1.5, fontSize: { xs: '0.84rem', md: undefined } }}>
-            Initia-native handoff submitted. Waiting for final execution result.
+            Interwoven Bridge opened. Continue the transfer in the bridge modal.
           </Alert>
         ) : null}
 
@@ -242,7 +242,7 @@ export default function ExecutionStatusCard({
                   Tx hash
                 </Typography>
                 <Typography variant="body2" sx={{ fontFamily: '"Roboto Mono", "SFMono-Regular", monospace', fontSize: { xs: '0.72rem', md: '0.8rem' }, textAlign: 'right', maxWidth: { xs: '58%', md: '70%' }, wordBreak: 'break-all' }}>
-                  {executionState.txHash || 'Pending submission'}
+                  {executionState.txHash || 'Managed in bridge modal'}
                 </Typography>
               </Stack>
               <Stack direction="row" justifyContent="space-between" spacing={1} sx={{ py: 0.5 }}>
@@ -262,11 +262,9 @@ export default function ExecutionStatusCard({
                   Execution mode
                 </Typography>
                 <Typography variant="body2" sx={{ textAlign: 'right', maxWidth: { xs: '58%', md: '70%' } }}>
-                  {executionState.mode === 'real_intent_anchor'
-                    ? 'Real Initia handoff'
-                    : executionState.mode === 'fallback_simulation'
-                      ? 'Fallback simulation'
-                      : 'Awaiting execution'}
+                  {executionState.mode === 'interwoven_bridge'
+                    ? 'Interwoven Bridge handoff'
+                    : 'Awaiting execution'}
                 </Typography>
               </Stack>
               <Stack direction="row" justifyContent="space-between" spacing={1} sx={{ py: 0.5 }}>
@@ -298,8 +296,8 @@ export default function ExecutionStatusCard({
             <Typography variant="subtitle1">Execution idle</Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontSize: { xs: '0.84rem', md: undefined } }}>
               {validationResult
-                ? 'Execution can proceed once the current validation result is accepted.'
-                : 'Execution unlocks after wallet connection and a completed validation run.'}
+                ? 'Bridge handoff can proceed once the current validation result is accepted.'
+                : 'Bridge handoff unlocks after wallet connection and a completed validation run.'}
             </Typography>
           </Box>
         ) : null}
@@ -317,7 +315,7 @@ export default function ExecutionStatusCard({
             <Stack spacing={1}>
               <Stack direction="row" spacing={1.25} alignItems="center">
                 <CheckCircleRoundedIcon color="success" />
-                <Typography variant="h6">Execution completed</Typography>
+                <Typography variant="h6">Bridge handoff opened</Typography>
               </Stack>
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
                 {executionState.message}

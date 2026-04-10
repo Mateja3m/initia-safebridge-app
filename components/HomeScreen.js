@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { useInterwovenKit } from '@initia/interwovenkit-react';
 import AppShell from './AppShell';
 import BridgeFormCard from './BridgeFormCard';
 import ExecutionStatusCard from './ExecutionStatusCard';
 import ValidationPanel from './ValidationPanel';
-import { defaultBridgeForm, initiaConfig } from '../lib/appConfig';
+import { bridgeOptions, defaultBridgeForm, initiaConfig } from '../lib/appConfig';
 import { executeBridgeIntent } from '../lib/bridgeExecutor';
 import { createWalletSession } from '../lib/initiaWallet';
 import { validateBridgeIntent } from '../lib/validationEngine';
@@ -41,7 +41,7 @@ function createValidationFailureResult(message) {
     ],
     summary: 'Validation could not complete. Re-run the check after connectivity stabilizes.',
     metadata: {
-      mode: 'hybrid',
+      mode: 'live',
       validatedAt: new Date().toISOString(),
     },
   };
@@ -54,7 +54,7 @@ export default function HomeScreen() {
     isConnected,
     openConnect,
     openWallet,
-    requestTxBlock,
+    openBridge,
     disconnect,
   } = useInterwovenKit();
 
@@ -64,16 +64,78 @@ export default function HomeScreen() {
   );
 
   const [bridgeForm, setBridgeForm] = useState(defaultBridgeForm);
+  const [catalogState, setCatalogState] = useState({
+    loading: true,
+    error: null,
+    options: bridgeOptions,
+  });
   const [validationState, setValidationState] = useState(defaultValidationState);
   const [executionState, setExecutionState] = useState(defaultExecutionState);
 
+  useEffect(() => {
+    let active = true;
+
+    async function loadCatalog() {
+      try {
+        const response = await fetch('/api/catalog');
+        const payload = await response.json();
+
+        if (!response.ok) {
+          throw new Error(payload?.message || 'Unable to load live rollup catalog.');
+        }
+
+        if (!active) {
+          return;
+        }
+
+        setCatalogState({
+          loading: false,
+          error: null,
+          options: payload,
+        });
+
+        setBridgeForm((current) => ({
+          ...current,
+          sourceNetwork: payload.sourceNetworks[0] || current.sourceNetwork,
+          destinationRollup:
+            payload.destinationRollups.includes(current.destinationRollup)
+              ? current.destinationRollup
+              : payload.destinationRollups[0] || '',
+          asset: payload.assets.includes(current.asset) ? current.asset : payload.assets[0] || current.asset,
+        }));
+      } catch (error) {
+        if (!active) {
+          return;
+        }
+
+        setCatalogState({
+          loading: false,
+          error: error?.message || 'Unable to load live rollup catalog.',
+          options: bridgeOptions,
+        });
+      }
+    }
+
+    loadCatalog();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const bridgeDisabled = useMemo(() => {
-    if (!wallet || !validationState.hasRun || !validationState.result) {
+    if (
+      !wallet ||
+      catalogState.loading ||
+      !bridgeForm.destinationRollup ||
+      !validationState.hasRun ||
+      !validationState.result
+    ) {
       return true;
     }
 
     return validationState.result.confidence === 'low';
-  }, [validationState, wallet]);
+  }, [bridgeForm.destinationRollup, catalogState.loading, validationState, wallet]);
 
   const currentDemoStep = useMemo(() => {
     if (executionState.status === 'success' || executionState.status === 'failure') {
@@ -110,9 +172,9 @@ export default function HomeScreen() {
     const executionValue =
       executionState.mode === 'idle'
         ? 'Awaiting execution'
-        : executionState.mode === 'real_intent_anchor'
-          ? 'Real handoff'
-          : 'Fallback sim';
+        : executionState.mode === 'interwoven_bridge'
+          ? 'Bridge handoff'
+          : 'Awaiting execution';
 
     const items = [
       {
@@ -130,7 +192,7 @@ export default function HomeScreen() {
         value: validationValue,
         caption: validationState.lastRunAt
           ? `Checked at ${new Date(validationState.lastRunAt).toLocaleTimeString()}`
-          : 'Hybrid route diagnostics',
+          : 'Live route diagnostics',
       },
       {
         label: 'Execution mode',
@@ -138,9 +200,9 @@ export default function HomeScreen() {
         caption:
           executionState.txHash
             ? `${executionState.txHash.slice(0, 8)}...${executionState.txHash.slice(-6)}`
-            : executionState.mode === 'real_intent_anchor'
-              ? 'Tx hash available after submission'
-              : 'Real-first with explicit fallback',
+            : executionState.mode === 'interwoven_bridge'
+              ? 'Bridge modal opens with validated defaults'
+              : 'Awaiting bridge handoff',
       },
     ];
 
@@ -168,6 +230,10 @@ export default function HomeScreen() {
   };
 
   const handleRunValidation = async () => {
+    if (!bridgeForm.destinationRollup) {
+      return;
+    }
+
     setValidationState({
       loading: true,
       result: null,
@@ -218,7 +284,7 @@ export default function HomeScreen() {
       validation: validationState.result,
       wallet,
       walletKit: {
-        requestTxBlock,
+        openBridge,
       },
       onLifecycle: (status) => {
         setExecutionState((current) => ({
@@ -252,6 +318,9 @@ export default function HomeScreen() {
         <Grid size={{ xs: 12, lg: 7 }}>
           <BridgeFormCard
             form={bridgeForm}
+            bridgeOptions={catalogState.options}
+            catalogLoading={catalogState.loading}
+            catalogError={catalogState.error}
             wallet={wallet}
             validationState={validationState}
             executionLoading={executionState.status === 'submitting'}

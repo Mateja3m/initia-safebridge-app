@@ -33,7 +33,7 @@ export default function AppShell({
     "Run validation",
     "Review confidence",
     "Execute transfer",
-    "Inspect outcome",
+    "Review handoff",
   ];
 
   return (
@@ -97,7 +97,7 @@ export default function AppShell({
                 color="text.secondary"
                 sx={{ maxWidth: 660, fontSize: { xs: '0.84rem', md: undefined }, lineHeight: { xs: 1.45, md: 1.55 } }}
               >
-                Live RPC checks, route rules, and execution proof stay on one screen.
+                Live RPC checks, route discovery, and bridge handoff stay on one screen.
               </Typography>
             </Stack>
 

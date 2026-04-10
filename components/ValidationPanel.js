@@ -164,7 +164,7 @@ export default function ValidationPanel({ wallet, form, validationState }) {
             MONITOR / VALIDATION ENGINE
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.45 }}>
-            Hybrid validation combines live endpoint checks with deterministic route scoring.
+            Live validation combines RPC probes, route discovery, destination status, and amount policy.
           </Typography>
         </Stack>
 

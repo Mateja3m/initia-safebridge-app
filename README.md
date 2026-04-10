@@ -1,23 +1,68 @@
 # SafeBridge: Intent-Aware Bridging for Interwoven Rollups
 
-SafeBridge is a single-screen bridging workstation for validating transfer readiness before execution on Initia-connected routes.
+## What it is
 
-## Features
+SafeBridge is a single-screen bridging workstation for Initia that evaluates transfer feasibility before the user opens the bridge flow.
 
-- InterwovenKit wallet connection with OKX Wallet support
-- Single-screen transfer workstation with route, validation, and execution panels
-- Hybrid validation engine:
-  - live RPC probing for source and destination endpoints
-  - real latency measurement
-  - deterministic route, destination, and amount scoring
-- Confidence scoring with structured pass, warn, and fail signals
-- Real-first execution path with explicit fallback simulation
-- Transaction lifecycle view with hash, chain label, and execution mode
-- Recovery guidance for blocked or failed execution states
+The current MVP is focused on one core job:
+
+- validate a selected bridge intent with live signals
+- show a confidence score before execution
+- open a validated route in Interwoven Bridge
+
+## Current MVP Scope
+
+SafeBridge is a pre-execution feasibility layer, not a full post-settlement bridge monitor.
+
+The MVP covers:
+
+- wallet connection through `@initia/interwovenkit-react`
+- source and destination RPC probing
+- latency measurement
+- live route discovery
+- destination readiness checks
+- confidence scoring
+- validated Interwoven Bridge handoff
+- handoff-stage feedback and recovery guidance
+
+The MVP does not yet cover:
+
+- full downstream bridge settlement tracking
+- universal finality monitoring after the bridge modal flow continues
+- complete lifecycle classification after every possible downstream bridge outcome
+- deployment on a Minitia rollup
+
+## What is real in this MVP
+
+- real wallet connection via InterwovenKit
+- real source RPC reachability checks
+- real destination RPC reachability checks
+- real latency measurement
+- real live rollup catalog loading from Initia registry
+- real route availability checks through live route discovery
+- real destination readiness checks against live endpoints
+- real Interwoven Bridge handoff after validation
+
+## Current limitations
+
+- SafeBridge currently tracks the validation phase and the bridge handoff phase inside the app.
+- After the Interwoven Bridge modal opens, downstream settlement is not fully tracked back into the SafeBridge UI yet.
+- Recovery guidance is strongest around validation failures and wallet / handoff-stage failures.
+- Some execution details depend on what the wallet and bridge flow expose back to the app during the handoff step.
+
+## Why this is Initia-native
+
+SafeBridge is built around Initia’s Interwoven flow rather than a generic token transfer UI.
+
+It uses:
+
+- `@initia/interwovenkit-react` for wallet connection and bridge handoff
+- Initia testnet RPC and registry endpoints for live validation signals
+- live route discovery for real bridge-path feasibility checks
 
 ## Stack
 
-- Next.js 
+- Next.js
 - Material UI (MUI)
 - `@initia/interwovenkit-react`
 - `@tanstack/react-query`
@@ -56,7 +101,7 @@ npm run start
 
 - App URL: [https://initia-safebridge.netlify.app/](https://initia-safebridge.netlify.app/)
 
-## Testing the app
+## Demo flow
 
 1. Start the app with `npm run dev`.
 2. Open `http://localhost:3000`.
@@ -70,7 +115,8 @@ npm run start
    - destination readiness
    - amount sanity
 8. If confidence is `medium` or `high`, click `Execute via Interwoven Bridge`.
-9. Review the execution lifecycle, transaction details, and outcome.
+9. SafeBridge opens the validated route in Interwoven Bridge.
+10. Review the handoff lifecycle, route details, and readiness guidance in the SafeBridge UI.
 
 ## Wallet testing with OKX Wallet
 
@@ -87,29 +133,6 @@ Expected behavior:
 - connected state shows a shortened wallet address
 - `Disconnect` clears the active wallet session from the app
 
-## Live RPC probing
-
-SafeBridge includes live RPC probing as part of validation.
-
-Current live checks:
-
-- source RPC reachability
-- destination RPC reachability
-- latency measurement for both endpoints
-- pass / warn / fail classification based on timing and response behavior
-
-Latency thresholds:
-
-- `pass`: under `400ms`
-- `warn`: `400ms` to under `1200ms`
-- `fail`: timeout, unreachable endpoint, or severe latency
-
-This signal is combined with deterministic checks for:
-
-- route availability
-- destination readiness
-- amount sanity
-
 ## Validation behavior
 
 Validation returns a normalized result with:
@@ -119,8 +142,32 @@ Validation returns a normalized result with:
 - `summary`
 - `metadata`
 
+Current live checks:
+
+- source RPC reachability
+- destination RPC reachability
+- latency measurement for both endpoints
+- live route discovery
+- live destination readiness checks
+- amount sanity policy
+
+Latency thresholds:
+
+- `pass`: under `400ms`
+- `warn`: `400ms` to under `1200ms`
+- `fail`: timeout, unreachable endpoint, or severe latency
+
 Confidence rules:
 
 - any hard RPC failure downgrades validation to `low`
 - warning-level latency contributes to `medium`
-- deterministic route or amount failures can also force `low`
+- a failed live route check or destination readiness check forces `low`
+- amount policy can also force `low`
+
+## Future work
+
+- downstream bridge settlement tracking after handoff
+- stronger transaction status syncing back into SafeBridge
+- deeper failure mapping after the bridge flow continues outside the app
+- liquidity-aware route hints
+- richer execution telemetry for repeated operator workflows

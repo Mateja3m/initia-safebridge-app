@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { useInterwovenKit } from '@initia/interwovenkit-react';

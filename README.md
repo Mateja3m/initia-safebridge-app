@@ -55,6 +55,10 @@ Run the production server:
 npm run start
 ```
 
+## Live deployment
+
+- App URL: [https://initia-safebridge.netlify.app/](https://initia-safebridge.netlify.app/)
+
 ## Testing the app
 
 1. Start the app with `npm run dev`.

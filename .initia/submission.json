@@ -3,7 +3,7 @@
   "repo_url": "https://github.com/Mateja3m/initia-safebridge-app",
   "commit_sha": "REPLACE_WITH_CURRENT_COMMIT_SHA",
   "rollup_chain_id": "REPLACE_WITH_ROLLUP_CHAIN_ID",
-  "deployed_address": "REPLACE_WITH_DEPLOYED_ADDRESS",
+  "deployed_address": "https://initia-safebridge.netlify.app/",
   "deploy_tx_hash": "REPLACE_WITH_DEPLOY_TX_HASH",
   "vm": "minievm",
   "native_feature": "interwoven-bridge",

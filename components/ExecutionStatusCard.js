@@ -130,14 +130,14 @@ export default function ExecutionStatusCard({
             OUTPUT / EXECUTION
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: { xs: '0.84rem', md: undefined }, lineHeight: 1.45 }}>
-            Handoff lifecycle, transaction details, and recovery guidance.
+            Handoff state, route details, and recovery guidance.
           </Typography>
         </Stack>
 
         <SectionHeader
           eyebrow="Bridge Handoff"
           title="Handoff Terminal"
-          description="SafeBridge records when a validated route is handed into the real Interwoven Bridge flow."
+          description="SafeBridge records when a validated route is passed into the live Interwoven Bridge flow."
         />
 
         <Box
@@ -234,7 +234,7 @@ export default function ExecutionStatusCard({
         >
           <Stack spacing={1}>
             <Typography variant="overline" color="primary.main">
-              Transaction Details
+              Handoff Details
             </Typography>
             <Stack divider={<Divider flexItem />}>
               <Stack direction="row" justifyContent="space-between" spacing={1} sx={{ py: 0.5 }}>
@@ -337,7 +337,7 @@ export default function ExecutionStatusCard({
             <Stack spacing={1}>
               <Stack direction="row" spacing={1.25} alignItems="center">
                 <ErrorRoundedIcon color="error" />
-                <Typography variant="h6">Execution failed</Typography>
+                <Typography variant="h6">Bridge handoff failed</Typography>
               </Stack>
               <Chip
                 label={categoryLabel[executionState.category]}

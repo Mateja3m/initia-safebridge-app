@@ -12,7 +12,7 @@ The current MVP is focused on one core job:
 
 ## Current MVP Scope
 
-SafeBridge is a pre-execution feasibility layer, not a full post-settlement bridge monitor.
+SafeBridge is a pre-execution feasibility layer, not a downstream settlement tracker.
 
 The MVP covers:
 
@@ -27,9 +27,9 @@ The MVP covers:
 
 The MVP does not yet cover:
 
-- full downstream bridge settlement tracking
-- universal finality monitoring after the bridge modal flow continues
-- complete lifecycle classification after every possible downstream bridge outcome
+- downstream settlement tracking after the bridge modal opens
+- full finality monitoring after the bridge flow continues outside SafeBridge
+- full lifecycle classification for every downstream bridge outcome
 - deployment on a Minitia rollup
 
 ## What is real in this MVP
@@ -46,9 +46,9 @@ The MVP does not yet cover:
 ## Current limitations
 
 - SafeBridge currently tracks the validation phase and the bridge handoff phase inside the app.
-- After the Interwoven Bridge modal opens, downstream settlement is not fully tracked back into the SafeBridge UI yet.
-- Recovery guidance is strongest around validation failures and wallet / handoff-stage failures.
-- Some execution details depend on what the wallet and bridge flow expose back to the app during the handoff step.
+- After the Interwoven Bridge modal opens, downstream settlement is not yet synced back into the SafeBridge UI.
+- Recovery guidance is strongest around validation failures and wallet or handoff-stage failures.
+- Some handoff details depend on what the wallet and bridge flow expose back to the app.
 
 ## Why this is Initia-native
 
@@ -116,7 +116,7 @@ npm run start
    - amount sanity
 8. If confidence is `medium` or `high`, click `Execute via Interwoven Bridge`.
 9. SafeBridge opens the validated route in Interwoven Bridge.
-10. Review the handoff lifecycle, route details, and readiness guidance in the SafeBridge UI.
+10. Review the handoff state, route details, and readiness guidance in the SafeBridge UI.
 
 ## Wallet testing with OKX Wallet
 
@@ -167,7 +167,7 @@ Confidence rules:
 ## Future work
 
 - downstream bridge settlement tracking after handoff
-- stronger transaction status syncing back into SafeBridge
+- stronger handoff status syncing back into SafeBridge
 - deeper failure mapping after the bridge flow continues outside the app
 - liquidity-aware route hints
 - richer execution telemetry for repeated operator workflows

@@ -169,6 +169,11 @@ export default function BridgeFormCard({
                   onChange={onFormChange('destinationRollup')}
                   fullWidth
                   disabled={catalogLoading || bridgeOptions.destinationRollups.length === 0}
+                  helperText={
+                    bridgeOptions.destinationRollups.length === 0
+                      ? 'No live bridgeable destinations are available for the selected asset right now.'
+                      : undefined
+                  }
                 >
                   {bridgeOptions.destinationRollups.map((option) => (
                     <MenuItem key={option} value={option}>

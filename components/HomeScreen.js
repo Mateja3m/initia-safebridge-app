@@ -77,7 +77,17 @@ export default function HomeScreen() {
 
     async function loadCatalog() {
       try {
-        const response = await fetch('/api/catalog');
+        setCatalogState((current) => ({
+          ...current,
+          loading: true,
+          error: null,
+        }));
+
+        const params = new URLSearchParams({
+          asset: bridgeForm.asset,
+          sourceNetwork: bridgeForm.sourceNetwork,
+        });
+        const response = await fetch(`/api/catalog?${params.toString()}`);
         const payload = await response.json();
 
         if (!response.ok) {
@@ -90,7 +100,10 @@ export default function HomeScreen() {
 
         setCatalogState({
           loading: false,
-          error: null,
+          error:
+            payload.destinationRollups.length === 0
+              ? `No live bridge destinations are currently discoverable for ${payload.asset} on ${bridgeForm.sourceNetwork}.`
+              : null,
           options: payload,
         });
 
@@ -121,12 +134,13 @@ export default function HomeScreen() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [bridgeForm.asset, bridgeForm.sourceNetwork]);
 
   const bridgeDisabled = useMemo(() => {
     if (
       !wallet ||
       catalogState.loading ||
+      catalogState.options.destinationRollups.length === 0 ||
       !bridgeForm.destinationRollup ||
       !validationState.hasRun ||
       !validationState.result

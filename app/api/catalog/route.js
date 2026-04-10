@@ -1,15 +1,18 @@
 import { NextResponse } from 'next/server';
 import { bridgeOptions } from '../../../lib/appConfig';
-import { getLiveDestinationRollups } from '../../../lib/liveCatalog';
+import { getRoutableDestinationRollups } from '../../../lib/liveCatalog';
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const destinationRollups = await getLiveDestinationRollups();
+    const { searchParams } = new URL(request.url);
+    const asset = searchParams.get('asset') || bridgeOptions.assets[0];
+    const destinationRollups = await getRoutableDestinationRollups(asset);
 
     return NextResponse.json({
       sourceNetworks: bridgeOptions.sourceNetworks,
       assets: bridgeOptions.assets,
       destinationRollups: destinationRollups.map((rollup) => rollup.label),
+      asset,
     });
   } catch (error) {
     return NextResponse.json(

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { useInterwovenKit } from '@initia/interwovenkit-react';
 import AppShell from './AppShell';
@@ -71,6 +71,7 @@ export default function HomeScreen() {
   });
   const [validationState, setValidationState] = useState(defaultValidationState);
   const [executionState, setExecutionState] = useState(defaultExecutionState);
+  const previousWalletAddressRef = useRef(null);
 
   useEffect(() => {
     let active = true;
@@ -135,6 +136,24 @@ export default function HomeScreen() {
       active = false;
     };
   }, [bridgeForm.asset, bridgeForm.sourceNetwork]);
+
+  useEffect(() => {
+    const previousAddress = previousWalletAddressRef.current;
+    const currentAddress = wallet?.address || null;
+
+    if (previousAddress && previousAddress !== currentAddress) {
+      setBridgeForm({
+        sourceNetwork: catalogState.options.sourceNetworks[0] || defaultBridgeForm.sourceNetwork,
+        destinationRollup: catalogState.options.destinationRollups[0] || '',
+        asset: catalogState.options.assets[0] || defaultBridgeForm.asset,
+        amount: '',
+      });
+      setValidationState(defaultValidationState);
+      setExecutionState(defaultExecutionState);
+    }
+
+    previousWalletAddressRef.current = currentAddress;
+  }, [catalogState.options, wallet]);
 
   const bridgeDisabled = useMemo(() => {
     if (

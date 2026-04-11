@@ -106,7 +106,7 @@ npm run start
 1. Start the app with `npm run dev`.
 2. Open `http://localhost:3000`.
 3. Click `Connect Wallet`.
-4. Complete the InterwovenKit flow with OKX Wallet.
+4. Complete the InterwovenKit flow with Keplr Wallet.
 5. Choose source, destination, asset, and amount.
 6. Click `Run Validation`.
 7. Review:
@@ -118,9 +118,11 @@ npm run start
 9. SafeBridge opens the validated route in Interwoven Bridge.
 10. Review the handoff state, route details, and readiness guidance in the SafeBridge UI.
 
-## Wallet testing with OKX Wallet
+## Wallet testing with Keplr Wallet
 
 SafeBridge uses InterwovenKit as the wallet integration layer.
+
+The current MVP has been tested with Keplr on Initia testnet.
 
 Current development chain:
 
@@ -132,6 +134,7 @@ Expected behavior:
 - disconnected state shows `Connect Wallet`
 - connected state shows a shortened wallet address
 - `Disconnect` clears the active wallet session from the app
+- Keplr should appear as the primary wallet path for manual testing
 
 ## Validation behavior
 

@@ -1,4 +1,4 @@
-import { Button, Chip, Stack, Typography } from '@mui/material';
+import { Button, Chip, Stack } from '@mui/material';
 
 export default function WalletConnectButton({
   wallet,
@@ -45,11 +45,6 @@ export default function WalletConnectButton({
           color={isConnected ? "success" : "default"}
           variant="outlined"
         />
-        <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.35 }}>
-          {isConnected
-            ? wallet.username || 'Initia signer session active'
-            : 'OKX Wallet via InterwovenKit'}
-        </Typography>
         {isConnected ? (
           <Button
             variant="text"

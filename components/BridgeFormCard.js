@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import SectionHeader from './SectionHeader';
+import { initiaConfig } from '../lib/appConfig';
 
 export default function BridgeFormCard({
   form,
@@ -124,6 +125,29 @@ export default function BridgeFormCard({
                   }}
                 >
                   Connect wallet to unlock submit. Validation works before that.
+                </Alert>
+              ) : null}
+
+              {wallet ? (
+                <Alert
+                  severity="warning"
+                  sx={{
+                    borderRadius: 1.5,
+                    backgroundColor: 'rgba(255, 179, 71, 0.12)',
+                    border: '1px solid rgba(255, 179, 71, 0.28)',
+                    '& .MuiAlert-message': {
+                      width: '100%',
+                    },
+                  }}
+                >
+                  <Stack spacing={0.25}>
+                    <Typography variant="subtitle2" sx={{ fontSize: { xs: '0.84rem', md: undefined } }}>
+                      Testnet INIT is required for fees
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.5 }}>
+                      Keep some INIT on {initiaConfig.chainId} in the connected wallet before opening the real Interwoven Bridge handoff.
+                    </Typography>
+                  </Stack>
                 </Alert>
               ) : null}
 

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createConfig, http, WagmiProvider } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 import {
   injectStyles,
   InterwovenKitProvider,
@@ -8,6 +10,13 @@ import {
 import InterwovenKitStyles from '@initia/interwovenkit-react/styles.js';
 
 const queryClient = new QueryClient();
+const wagmiConfig = createConfig({
+  chains: [mainnet],
+  connectors: [],
+  transports: {
+    [mainnet.id]: http(),
+  },
+});
 
 export default function ClientProviders({ children }) {
   const [stylesReady, setStylesReady] = useState(false);
@@ -23,9 +32,11 @@ export default function ClientProviders({ children }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <InterwovenKitProvider {...TESTNET} defaultChainId="initiation-2">
-        {children}
-      </InterwovenKitProvider>
+      <WagmiProvider config={wagmiConfig}>
+        <InterwovenKitProvider {...TESTNET} defaultChainId="initiation-2">
+          {children}
+        </InterwovenKitProvider>
+      </WagmiProvider>
     </QueryClientProvider>
   );
 }

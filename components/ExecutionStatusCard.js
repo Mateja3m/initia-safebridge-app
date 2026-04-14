@@ -78,7 +78,7 @@ const lifecycleDefinitions = [
   { id: '01', key: 'intent', label: 'Intent configured' },
   { id: '02', key: 'validation', label: 'Validation scored' },
   { id: '03', key: 'submitted', label: 'Bridge handoff opened' },
-  { id: '04', key: 'result', label: 'Handoff state received' },
+  { id: '04', key: 'result', label: 'Handoff response received' },
 ];
 
 const lifecycleTone = {
@@ -221,6 +221,23 @@ export default function ExecutionStatusCard({
           <Alert severity="info" sx={{ borderRadius: 1.5, fontSize: { xs: '0.84rem', md: undefined } }}>
             Interwoven Bridge opened. Continue the transfer in the bridge modal.
           </Alert>
+        ) : null}
+
+        {(executionState.status === 'submitted' || executionState.status === 'success') ? (
+          <Box
+            sx={{
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              p: { xs: 1, md: 1.15 },
+              backgroundColor: '#F8FAFE',
+            }}
+          >
+            <Typography variant="subtitle2">Post-handoff note</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, fontSize: { xs: '0.84rem', md: undefined } }}>
+              After handoff, final progress can continue in the external bridge modal. Check wallet activity or bridge withdrawal status if the SafeBridge panel does not advance further.
+            </Typography>
+          </Box>
         ) : null}
 
         <Box

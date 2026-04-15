@@ -213,7 +213,7 @@ export default function HomeScreen() {
       {
         label: 'Wallet status',
         value: wallet ? wallet.statusLabel : 'Disconnected',
-        caption: wallet ? wallet.displayAddress : 'Connect OKX Wallet',
+        caption: wallet ? wallet.displayAddress : 'Connect wallet',
       },
       {
         label: 'Network',

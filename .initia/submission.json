@@ -1,7 +1,7 @@
 {
   "project_name": "SafeBridge: Intent-Aware Bridging for Interwoven Rollups",
   "repo_url": "https://github.com/Mateja3m/initia-safebridge-app",
-  "commit_sha": "33f981e9b9e3ebb3b0af7ec34aada5a8c2b08f4d",
+  "commit_sha": "97725d15a6b330e33c23d2459db2bfb8d652ebdb",
   "rollup_chain_id": "initiation-2",
   "deployed_address": "https://initia-safebridge.netlify.app/",
   "deploy_tx_hash": "N/A",

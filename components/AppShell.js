@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Chip,
   Container,
   Divider,
@@ -8,8 +9,9 @@ import {
 } from "@mui/material";
 import AutoGraphRoundedIcon from "@mui/icons-material/AutoGraphRounded";
 import HubRoundedIcon from "@mui/icons-material/HubRounded";
+import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import RuleRoundedIcon from "@mui/icons-material/RuleRounded";
-import { heroMetrics } from "../lib/appConfig";
+import { demoVideoUrl, heroMetrics } from "../lib/appConfig";
 import WalletConnectButton from "./WalletConnectButton";
 
 const metricIcons = {
@@ -99,6 +101,21 @@ export default function AppShell({
               >
                 Live RPC checks, route discovery, and bridge handoff stay on one screen.
               </Typography>
+
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ pt: 0.35 }}>
+                <Button
+                  component="a"
+                  href={demoVideoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  variant="outlined"
+                  size="small"
+                  endIcon={<OpenInNewRoundedIcon fontSize="small" />}
+                  sx={{ alignSelf: "flex-start" }}
+                >
+                  Watch demo
+                </Button>
+              </Stack>
             </Stack>
 
             <WalletConnectButton

@@ -100,6 +100,7 @@ npm run start
 ## Live deployment
 
 - App URL: [https://initia-safebridge.netlify.app/](https://initia-safebridge.netlify.app/)
+- Demo video: [https://youtu.be/tCHTP_DsuKg](https://youtu.be/tCHTP_DsuKg)
 
 ## Demo flow
 

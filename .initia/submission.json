@@ -9,5 +9,5 @@
   "native_feature": "interwoven-bridge",
   "core_logic_path": "lib/liveValidation.js",
   "native_feature_frontend_path": "components/BridgeFormCard.js",
-  "demo_video_url": "REPLACE_WITH_DEMO_VIDEO_URL"
+  "demo_video_url": "https://youtu.be/tCHTP_DsuKg"
 }
